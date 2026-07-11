@@ -11,6 +11,7 @@ from flask import Flask
 def register_blueprints(app: Flask) -> None:
     from app.routes.auth import auth_bp
     from app.routes.crud import build_crud_blueprint
+    from app.routes.pages import pages_bp, public_pages_bp
 
     from app.models.faq import Faq
     from app.models.partner import Partner
@@ -18,6 +19,8 @@ def register_blueprints(app: Flask) -> None:
     from app.schemas.partner import partner_schema
 
     app.register_blueprint(auth_bp, url_prefix="/api/auth")
+    app.register_blueprint(pages_bp, url_prefix="/api/pages")
+    app.register_blueprint(public_pages_bp, url_prefix="/api/public")
 
     app.register_blueprint(
         build_crud_blueprint(

@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.db
+.env
+.env.*
+!.env.example
+
+# Node / front
+node_modules/
+dist/
+.vite/
+
+# Media & uploads (garder les dossiers, pas le contenu)
+backend/uploads/*
+backend/media/*
+!backend/uploads/.gitkeep
+!backend/media/.gitkeep
+
+.DS_Store

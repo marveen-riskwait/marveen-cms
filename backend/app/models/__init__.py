@@ -11,8 +11,10 @@ from app.models.document import Document
 from app.models.event import Event
 from app.models.faq import Faq
 from app.models.media import Media
+from app.models.menu import Menu
 from app.models.page import Page
 from app.models.partner import Partner
+from app.models.setting import Setting
 from app.models.team_member import TeamMember
 from app.models.testimonial import Testimonial
 from app.models.user import Permission, Role, TokenBlocklist, User

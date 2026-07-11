@@ -30,12 +30,23 @@ def _coerce(value: str):
 class CRUDService:
     def __init__(self, model: type[BaseModel], *,
                  searchable: Iterable[str] = (), sortable: Iterable[str] = (),
-                 filterable: Iterable[str] = (), default_sort: str = "id") -> None:
+                 filterable: Iterable[str] = (), default_sort: str = "id",
+                 base_filters: dict | None = None, defaults: dict | None = None) -> None:
         self.model = model
         self.searchable = tuple(searchable)
         self.sortable = tuple(sortable) + ("id",)
         self.filterable = tuple(filterable)
         self.default_sort = default_sort
+        # Fixed equality filters applied to every query (e.g. section="blog"),
+        # and column defaults injected on create — lets several views share a table.
+        self.base_filters = dict(base_filters or {})
+        self.defaults = dict(defaults or {})
+
+    def _scope(self, *, trashed: bool):
+        query = self.model.query_trashed() if trashed else self.model.query_active()
+        for field, value in self.base_filters.items():
+            query = query.filter(getattr(self.model, field) == value)
+        return query
 
     # ── Query building (list endpoint) ──────────────────────────────
     def _search(self, query):
@@ -62,19 +73,17 @@ class CRUDService:
         return query.order_by(direction(getattr(self.model, field)))
 
     def list_query(self, *, trashed: bool = False):
-        base = self.model.query_trashed() if trashed else self.model.query_active()
-        return self._sort(self._filter(self._search(base)))
+        return self._sort(self._filter(self._search(self._scope(trashed=trashed))))
 
     # ── Single-item operations ──────────────────────────────────────
     def get_or_404(self, item_id: int, *, trashed: bool = False):
-        scope = self.model.query_trashed() if trashed else self.model.query_active()
-        obj = scope.filter(self.model.id == item_id).first()
+        obj = self._scope(trashed=trashed).filter(self.model.id == item_id).first()
         if obj is None:
             raise APIException("Ressource introuvable", status_code=404)
         return obj
 
     def create(self, data: dict):
-        return self.model(**data).save()
+        return self.model(**{**self.defaults, **data}).save()
 
     def update(self, item_id: int, data: dict):
         obj = self.get_or_404(item_id)

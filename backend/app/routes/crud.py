@@ -15,10 +15,13 @@ from app.utils.responses import ok, paginate
 
 def build_crud_blueprint(*, name: str, model, schema, module: str,
                          searchable=(), sortable=(), filterable=(),
-                         default_sort: str = "id") -> Blueprint:
+                         default_sort: str = "id",
+                         base_filters: dict | None = None,
+                         defaults: dict | None = None) -> Blueprint:
     bp = Blueprint(name, __name__)
     service = CRUDService(model, searchable=searchable, sortable=sortable,
-                          filterable=filterable, default_sort=default_sort)
+                          filterable=filterable, default_sort=default_sort,
+                          base_filters=base_filters, defaults=defaults)
 
     @bp.get("")
     @require_permission(f"{module}.view")

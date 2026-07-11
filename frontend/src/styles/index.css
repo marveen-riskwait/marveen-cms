@@ -1,0 +1,73 @@
+/* Marveen CMS admin — layout & theme (Bootstrap 5.3 + custom).
+   Brand: green (logo RDV) + slate neutrals. Light default, dark ready. */
+
+:root {
+  --mv-brand: #2f9e63;
+  --mv-brand-2: #29abe2;
+  --mv-sidebar-bg: #101826;
+  --mv-sidebar-fg: #c7d2e0;
+  --mv-sidebar-active: #1c2942;
+  --bs-primary: #2f9e63;
+  --bs-primary-rgb: 47, 158, 99;
+}
+[data-bs-theme="dark"] {
+  --mv-sidebar-bg: #0b1020;
+  --bs-body-bg: #0f1523;
+  --bs-secondary-bg: #172033;
+}
+
+body { min-height: 100vh; }
+.btn-primary {
+  --bs-btn-bg: var(--mv-brand); --bs-btn-border-color: var(--mv-brand);
+  --bs-btn-hover-bg: #268253; --bs-btn-hover-border-color: #268253;
+}
+a { text-decoration: none; }
+
+/* Login */
+.mv-login {
+  min-height: 100vh; display: grid; place-items: center;
+  background: linear-gradient(135deg, #0b1020, #123a2a 60%, #0e5b6b);
+  padding: 1rem;
+}
+.mv-login .card { width: 100%; max-width: 400px; border: 0; box-shadow: 0 20px 60px -20px rgba(0,0,0,.55); }
+.mv-logo { font-weight: 800; letter-spacing: -.02em; }
+.mv-logo b { color: var(--mv-brand); }
+.mv-logo i { color: var(--mv-brand-2); }
+
+/* Shell */
+.mv-shell { display: flex; min-height: 100vh; }
+.mv-sidebar {
+  width: 250px; flex: 0 0 250px; background: var(--mv-sidebar-bg); color: var(--mv-sidebar-fg);
+  display: flex; flex-direction: column; position: sticky; top: 0; height: 100vh; overflow-y: auto;
+}
+.mv-sidebar .brand { padding: 1.1rem 1.2rem; font-weight: 800; color: #fff; font-size: 1.15rem; letter-spacing: -.02em; }
+.mv-sidebar .brand b { color: var(--mv-brand); } .mv-sidebar .brand i { color: var(--mv-brand-2); font-style: normal; }
+.mv-group { padding: .5rem 1.2rem .2rem; font-size: .68rem; text-transform: uppercase; letter-spacing: .12em; color: #5f7089; }
+.mv-nav a {
+  display: flex; align-items: center; gap: .7rem; padding: .55rem 1.2rem; color: var(--mv-sidebar-fg);
+  font-size: .9rem; border-left: 3px solid transparent;
+}
+.mv-nav a:hover { background: rgba(255,255,255,.04); color: #fff; }
+.mv-nav a.active { background: var(--mv-sidebar-active); color: #fff; border-left-color: var(--mv-brand); }
+.mv-nav a i { width: 1.1rem; text-align: center; opacity: .9; }
+
+.mv-main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.mv-topbar {
+  height: 58px; display: flex; align-items: center; justify-content: space-between;
+  padding: 0 1.2rem; background: var(--bs-body-bg); border-bottom: 1px solid var(--bs-border-color);
+  position: sticky; top: 0; z-index: 10;
+}
+.mv-content { padding: 1.4rem; flex: 1; }
+
+/* Stat cards */
+.stat-card { border: 1px solid var(--bs-border-color); border-radius: 14px; }
+.stat-card .n { font-size: 1.8rem; font-weight: 800; line-height: 1; }
+.stat-card .l { font-size: .78rem; text-transform: uppercase; letter-spacing: .06em; color: var(--bs-secondary-color); }
+.stat-card i { font-size: 1.4rem; color: var(--mv-brand); }
+
+/* Sidebar off-canvas on mobile */
+@media (max-width: 768px) {
+  .mv-sidebar { position: fixed; z-index: 1050; transform: translateX(-100%); transition: transform .2s ease; }
+  .mv-sidebar.open { transform: none; }
+  .mv-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,.4); z-index: 1040; }
+}

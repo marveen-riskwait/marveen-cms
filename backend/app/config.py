@@ -93,6 +93,11 @@ class Config:
     # ── Draft preview links (signed, expiring) ──────────────────────
     PREVIEW_TOKEN_TTL: int = int(os.getenv("PREVIEW_TOKEN_TTL", "3600"))
 
+    # ── Accounts ────────────────────────────────────────────────────
+    # Admin CMS: public self-registration is OFF by default. Accounts are
+    # created by an administrator via the Users screen. Set to 1 to open it.
+    ALLOW_PUBLIC_REGISTRATION: bool = _bool("ALLOW_PUBLIC_REGISTRATION", default=False)
+
     # ── AI (Anthropic Claude) ───────────────────────────────────────
     ANTHROPIC_API_KEY: str = os.getenv("ANTHROPIC_API_KEY", "")
     AI_MODEL: str = os.getenv("AI_MODEL", "claude-sonnet-5")

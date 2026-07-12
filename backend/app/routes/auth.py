@@ -6,7 +6,7 @@ protection; the CSRF token is returned in the body so the SPA can echo it in
 """
 from __future__ import annotations
 
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, current_app, jsonify, request
 from flask_jwt_extended import (
     create_access_token, create_refresh_token, get_csrf_token, get_jwt,
     jwt_required, set_access_cookies, set_refresh_cookies, unset_jwt_cookies,
@@ -16,6 +16,7 @@ from app.extensions import db, limiter
 from app.permissions.decorators import current_user
 from app.schemas.auth import login_schema, register_schema
 from app.services import auth_service
+from app.utils.errors import APIException
 
 auth_bp = Blueprint("auth", __name__)
 
@@ -37,6 +38,10 @@ def _issue_session(user, status: int = 200):
 @auth_bp.post("/register")
 @limiter.limit("10 per minute")
 def register():
+    # Closed by default on an admin CMS — accounts are created via the Users
+    # screen. Enable ALLOW_PUBLIC_REGISTRATION to open public sign-up.
+    if not current_app.config.get("ALLOW_PUBLIC_REGISTRATION"):
+        raise APIException("L'inscription publique est désactivée", status_code=403)
     data = register_schema.load(request.get_json(silent=True) or {})
     user = auth_service.register_user(**data)  # public sign-up: no roles, not admin
     return _issue_session(user, status=201)

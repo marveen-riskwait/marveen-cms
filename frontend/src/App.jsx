@@ -5,6 +5,7 @@ import { AdminLayout } from "./layouts/AdminLayout";
 import { Dashboard } from "./pages/Dashboard";
 import { Login } from "./pages/Login";
 import { MediaLibrary } from "./pages/MediaLibrary";
+import { Menus } from "./pages/Menus";
 import { PageBuilder } from "./pages/PageBuilder";
 import { PagesList } from "./pages/PagesList";
 import { Placeholder } from "./pages/Placeholder";
@@ -25,6 +26,7 @@ export default function App() {
         <Route path="media" element={<MediaLibrary />} />
         <Route path="users" element={<Users />} />
         <Route path="settings" element={<Settings />} />
+        <Route path="menus" element={<Menus />} />
         {/* Generic CRUD screen for every declared module (see config/resources.js). */}
         <Route path=":resource" element={<ResourcePage />} />
         <Route path="*" element={<Placeholder />} />

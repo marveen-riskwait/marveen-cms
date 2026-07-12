@@ -105,3 +105,7 @@ a { text-decoration: none; }
 .mv-media-list-actions button { border: 0; background: transparent; color: #fff; font-size: .8rem; line-height: 1; padding: 2px 4px; cursor: pointer; }
 .mv-media-list-add { width: 88px; height: 88px; border: 2px dashed var(--bs-border-color); border-radius: 10px; background: transparent; color: var(--bs-secondary-color); cursor: pointer; }
 .mv-media-list-add:hover { border-color: var(--mv-brand); color: var(--mv-brand); }
+
+/* Menu tree editor */
+.mv-menu-node { padding-top: .25rem; }
+.mv-menu-children { margin-left: 1.5rem; padding-left: 1rem; border-left: 2px solid var(--bs-border-color); }

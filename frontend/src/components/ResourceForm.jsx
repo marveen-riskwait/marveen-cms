@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { resource, errMsg } from "../api/client";
 import { useToast } from "../contexts/ToastContext";
+import { MediaPicker } from "./MediaPicker";
 
 function toInputValue(field, value) {
   if (value == null) return field.type === "bool" ? false : "";
@@ -37,6 +38,35 @@ function toPayload(descriptor, state) {
   return out;
 }
 
+function MediaField({ f, value, onChange, error }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <div className="input-group">
+        {value && (
+          <span className="input-group-text p-1">
+            <img src={value} alt="" style={{ height: 30, width: 30, objectFit: "cover", borderRadius: 4 }} />
+          </span>
+        )}
+        <input type="text" className={"form-control" + (error ? " is-invalid" : "")}
+               placeholder="URL de l'image" value={value}
+               onChange={(e) => onChange(e.target.value)} />
+        <button type="button" className="btn btn-outline-secondary" onClick={() => setOpen(true)}>
+          <i className="bi bi-images me-1" /> Choisir
+        </button>
+        {value && (
+          <button type="button" className="btn btn-outline-secondary" onClick={() => onChange("")}
+                  title="Retirer"><i className="bi bi-x-lg" /></button>
+        )}
+      </div>
+      {open && (
+        <MediaPicker onClose={() => setOpen(false)}
+                     onSelect={(url) => { onChange(url); setOpen(false); }} />
+      )}
+    </>
+  );
+}
+
 function Field({ f, value, onChange, error }) {
   const cls = "form-control" + (error ? " is-invalid" : "");
   return (
@@ -44,7 +74,9 @@ function Field({ f, value, onChange, error }) {
       {f.type !== "bool" && (
         <label className="form-label small">{f.label}{f.required && " *"}</label>
       )}
-      {f.type === "textarea" ? (
+      {f.type === "media" ? (
+        <MediaField f={f} value={value} onChange={onChange} error={error} />
+      ) : f.type === "textarea" ? (
         <textarea className={cls} rows="3" value={value} onChange={(e) => onChange(e.target.value)} />
       ) : f.type === "bool" ? (
         <div className="form-check">

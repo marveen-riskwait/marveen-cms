@@ -1,7 +1,7 @@
 // Declarative description of each module's admin screen. The generic list +
 // form components render entirely from this — a new module is one entry.
 //
-// field.type: text | textarea | number | bool | select | datetime | tags
+// field.type: text | textarea | number | bool | select | datetime | tags | media
 // column.type: text | bool | badge
 
 const STATUS = [
@@ -25,7 +25,7 @@ const article = (label) => ({
     { name: "title", label: "Titre", type: "text", required: true },
     { name: "excerpt", label: "Extrait", type: "textarea" },
     { name: "content", label: "Contenu (HTML)", type: "textarea" },
-    { name: "cover_image", label: "Image de couverture (URL)", type: "text" },
+    { name: "cover_image", label: "Image de couverture", type: "media" },
     { name: "category", label: "Catégorie", type: "text" },
     { name: "status", label: "Statut", type: "select", options: STATUS, default: "draft" },
     { name: "is_featured", label: "À la une", type: "bool" },
@@ -75,7 +75,7 @@ export const RESOURCES = {
       { name: "role", label: "Rôle / lieu", type: "text" },
       { name: "quote", label: "Témoignage", type: "textarea", required: true },
       { name: "rating", label: "Note (1-5)", type: "number", default: 5 },
-      { name: "avatar", label: "Avatar (URL)", type: "text" },
+      { name: "avatar", label: "Avatar", type: "media" },
       ORDER_FIELD, PUBLISHED_FIELD,
     ],
   },
@@ -86,7 +86,7 @@ export const RESOURCES = {
     fields: [
       { name: "name", label: "Nom", type: "text", required: true },
       { name: "url", label: "Site (URL)", type: "text" },
-      { name: "logo_url", label: "Logo (URL)", type: "text" },
+      { name: "logo_url", label: "Logo", type: "media" },
       ORDER_FIELD, PUBLISHED_FIELD,
     ],
   },
@@ -97,7 +97,7 @@ export const RESOURCES = {
     fields: [
       { name: "name", label: "Nom", type: "text", required: true },
       { name: "url", label: "Site (URL)", type: "text" },
-      { name: "logo", label: "Logo (URL)", type: "text" },
+      { name: "logo", label: "Logo", type: "media" },
       ORDER_FIELD, PUBLISHED_FIELD,
     ],
   },
@@ -109,7 +109,7 @@ export const RESOURCES = {
     fields: [
       { name: "name", label: "Nom", type: "text", required: true },
       { name: "role", label: "Rôle", type: "text" },
-      { name: "photo", label: "Photo (URL)", type: "text" },
+      { name: "photo", label: "Photo", type: "media" },
       { name: "bio", label: "Bio", type: "textarea" },
       ORDER_FIELD, PUBLISHED_FIELD,
     ],
@@ -138,7 +138,7 @@ export const RESOURCES = {
       { name: "starts_at", label: "Début", type: "datetime" },
       { name: "ends_at", label: "Fin", type: "datetime" },
       { name: "location", label: "Lieu", type: "text" },
-      { name: "cover_image", label: "Image (URL)", type: "text" },
+      { name: "cover_image", label: "Image", type: "media" },
       { name: "status", label: "Statut", type: "select", options: STATUS, default: "draft" },
       { name: "is_featured", label: "À la une", type: "bool" },
     ],

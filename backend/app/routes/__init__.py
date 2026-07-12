@@ -18,6 +18,7 @@ def register_blueprints(app: Flask) -> None:
     from app.routes.pages import pages_bp, public_pages_bp
     from app.routes.settings import public_settings_bp, settings_bp
     from app.routes.sitemap import seo_bp
+    from app.routes.users import roles_bp, users_bp
 
     from app.models.article import Article
     from app.models.brand import Brand
@@ -41,6 +42,8 @@ def register_blueprints(app: Flask) -> None:
     app.register_blueprint(public_settings_bp, url_prefix="/api/public")
     app.register_blueprint(public_menus_bp, url_prefix="/api/public")
     app.register_blueprint(dashboard_bp, url_prefix="/api/dashboard")
+    app.register_blueprint(users_bp, url_prefix="/api/users")
+    app.register_blueprint(roles_bp, url_prefix="/api/roles")
     app.register_blueprint(seo_bp)  # /sitemap.xml, /robots.txt at the root
 
     # ── Content modules (generic CRUD) ──────────────────────────────

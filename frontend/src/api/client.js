@@ -57,6 +57,11 @@ export const MediaAPI = {
   remove: (id) => api.delete(`/media/${id}`).then((r) => r.data),
 };
 
+// Roles listing (read-only) for the user editor's role picker.
+export const RolesAPI = {
+  list: () => api.get("/roles").then((r) => r.data.data),
+};
+
 // Generic CRUD client for any module (used by the next milestone's tables).
 export const resource = (name) => ({
   list: (params) => api.get(`/${name}`, { params }).then((r) => r.data),

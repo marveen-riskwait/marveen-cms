@@ -4,6 +4,8 @@ import { ProtectedRoute } from "./components/ProtectedRoute";
 import { AdminLayout } from "./layouts/AdminLayout";
 import { Dashboard } from "./pages/Dashboard";
 import { Login } from "./pages/Login";
+import { ContentEntries } from "./pages/ContentEntries";
+import { ContentTypes } from "./pages/ContentTypes";
 import { MediaLibrary } from "./pages/MediaLibrary";
 import { Menus } from "./pages/Menus";
 import { PageBuilder } from "./pages/PageBuilder";
@@ -24,6 +26,8 @@ export default function App() {
         <Route path="pages/new" element={<PageBuilder />} />
         <Route path="pages/:id" element={<PageBuilder />} />
         <Route path="media" element={<MediaLibrary />} />
+        <Route path="content-types" element={<ContentTypes />} />
+        <Route path="content/:slug" element={<ContentEntries />} />
         <Route path="users" element={<Users />} />
         <Route path="settings" element={<Settings />} />
         <Route path="menus" element={<Menus />} />

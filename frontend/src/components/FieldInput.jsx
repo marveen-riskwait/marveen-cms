@@ -100,6 +100,9 @@ export function FieldInput({ f, value, onChange, error }) {
     case "datetime":
       return <input type="datetime-local" className={cls} value={value || ""}
                     onChange={(e) => onChange(e.target.value)} />;
+    case "date":
+      return <input type="date" className={cls} value={value || ""}
+                    onChange={(e) => onChange(e.target.value)} />;
     case "select":
       return (
         <select className={"form-select" + (error ? " is-invalid" : "")} value={value || ""}

@@ -64,6 +64,23 @@ export const SettingsAPI = {
     api.put(`/settings/${key}`, { value, group, is_public }).then((r) => r.data.data),
 };
 
+// Content engine: user-defined types + their entries (dynamic per type).
+export const ContentTypesAPI = {
+  list: (params) => api.get("/content-types", { params }).then((r) => r.data),
+  get: (id) => api.get(`/content-types/${id}`).then((r) => r.data.data),
+  create: (body) => api.post("/content-types", body).then((r) => r.data.data),
+  update: (id, body) => api.patch(`/content-types/${id}`, body).then((r) => r.data.data),
+  remove: (id) => api.delete(`/content-types/${id}`).then((r) => r.data),
+};
+
+export const contentEntries = (slug) => ({
+  list: (params) => api.get(`/content/${slug}`, { params }).then((r) => r.data),
+  get: (id) => api.get(`/content/${slug}/${id}`).then((r) => r.data.data),
+  create: (body) => api.post(`/content/${slug}`, body).then((r) => r.data.data),
+  update: (id, body) => api.patch(`/content/${slug}/${id}`, body).then((r) => r.data.data),
+  remove: (id) => api.delete(`/content/${slug}/${id}`).then((r) => r.data),
+});
+
 // Page-specific actions: draft preview token + revision history.
 export const PagesAPI = {
   previewToken: (id) => api.get(`/pages/${id}/preview`).then((r) => r.data.data),

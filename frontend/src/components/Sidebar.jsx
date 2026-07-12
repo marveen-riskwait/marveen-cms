@@ -1,9 +1,20 @@
+import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
+import { ContentTypesAPI } from "../api/client";
 import { MODULE_GROUPS } from "../config/modules";
 import { useAuth } from "../contexts/AuthContext";
 
 export function Sidebar({ open, onNavigate }) {
-  const { can } = useAuth();
+  const { can, user } = useAuth();
+  const [types, setTypes] = useState([]);
+
+  // User-defined content types appear as their own nav section.
+  useEffect(() => {
+    if (!can("content.view")) { setTypes([]); return; }
+    ContentTypesAPI.list({ per_page: 100 })
+      .then((d) => setTypes(d.items || [])).catch(() => setTypes([]));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
 
   return (
     <aside className={`mv-sidebar ${open ? "open" : ""}`}>
@@ -13,6 +24,22 @@ export function Sidebar({ open, onNavigate }) {
         <NavLink to="/admin" end onClick={onNavigate}>
           <i className="bi bi-speedometer2" /> Tableau de bord
         </NavLink>
+
+        {(types.length > 0 || can("content_types.view")) && (
+          <div>
+            <div className="mv-group">Contenus</div>
+            {types.map((t) => (
+              <NavLink key={t.slug} to={`/admin/content/${t.slug}`} onClick={onNavigate}>
+                <i className={`bi ${t.icon || "bi-collection"}`} /> {t.name}
+              </NavLink>
+            ))}
+            {can("content_types.view") && (
+              <NavLink to="/admin/content-types" onClick={onNavigate}>
+                <i className="bi bi-sliders" /> Types de contenu
+              </NavLink>
+            )}
+          </div>
+        )}
 
         {MODULE_GROUPS.map((group) => {
           const items = group.items.filter((it) => can(it.perm));

@@ -64,6 +64,20 @@ export const SettingsAPI = {
     api.put(`/settings/${key}`, { value, group, is_public }).then((r) => r.data.data),
 };
 
+// Headless integrations: API tokens + webhooks.
+export const ApiTokensAPI = {
+  list: (params) => api.get("/api-tokens", { params }).then((r) => r.data),
+  create: (body) => api.post("/api-tokens", body).then((r) => r.data.data), // includes `token` once
+  remove: (id) => api.delete(`/api-tokens/${id}`).then((r) => r.data),
+};
+export const WebhooksAPI = {
+  list: (params) => api.get("/webhooks", { params }).then((r) => r.data),
+  events: () => api.get("/webhooks/events").then((r) => r.data.data),
+  create: (body) => api.post("/webhooks", body).then((r) => r.data.data), // includes `secret` once
+  update: (id, body) => api.patch(`/webhooks/${id}`, body).then((r) => r.data.data),
+  remove: (id) => api.delete(`/webhooks/${id}`).then((r) => r.data),
+};
+
 // AI assistant. `status` is cached (one probe per session).
 let _aiStatus = null;
 export const AiAPI = {

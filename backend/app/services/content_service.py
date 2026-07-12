@@ -156,17 +156,26 @@ def get_entry_or_404(ct: ContentType, entry_id: int) -> ContentEntry:
     return entry
 
 
+def _notify_published(ct: ContentType, entry: ContentEntry) -> None:
+    from app.services import webhook_service
+    webhook_service.dispatch("entry.published", {"type": ct.slug, **entry.to_dict()})
+
+
 def create_entry(ct: ContentType, payload: dict) -> ContentEntry:
     clean, title = validate_entry_data(ct, payload.get("data") or {})
     entry = ContentEntry(
         content_type_id=ct.id, title=title, data=clean,
         status=payload.get("status", "draft"), locale=payload.get("locale", "fr"),
         seo=payload.get("seo") or {})
-    return entry.save()
+    entry.save()
+    if entry.status == "published":
+        _notify_published(ct, entry)
+    return entry
 
 
 def update_entry(ct: ContentType, entry_id: int, payload: dict) -> ContentEntry:
     entry = get_entry_or_404(ct, entry_id)
+    was_published = entry.status == "published"
     if "data" in payload:
         clean, title = validate_entry_data(ct, payload["data"] or {})
         entry.data = clean
@@ -175,4 +184,6 @@ def update_entry(ct: ContentType, entry_id: int, payload: dict) -> ContentEntry:
         if key in payload:
             setattr(entry, key, payload[key])
     db.session.commit()
+    if entry.status == "published" and not was_published:
+        _notify_published(ct, entry)
     return entry

@@ -6,6 +6,7 @@ import { Dashboard } from "./pages/Dashboard";
 import { Login } from "./pages/Login";
 import { ContentEntries } from "./pages/ContentEntries";
 import { ContentTypes } from "./pages/ContentTypes";
+import { Integrations } from "./pages/Integrations";
 import { MediaLibrary } from "./pages/MediaLibrary";
 import { Menus } from "./pages/Menus";
 import { PageBuilder } from "./pages/PageBuilder";
@@ -31,6 +32,7 @@ export default function App() {
         <Route path="users" element={<Users />} />
         <Route path="settings" element={<Settings />} />
         <Route path="menus" element={<Menus />} />
+        <Route path="integrations" element={<Integrations />} />
         {/* Generic CRUD screen for every declared module (see config/resources.js). */}
         <Route path=":resource" element={<ResourcePage />} />
         <Route path="*" element={<Placeholder />} />

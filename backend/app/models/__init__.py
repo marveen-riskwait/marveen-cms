@@ -4,6 +4,7 @@ Import every model here as it is added so that ``from app import models``
 exposes them and Alembic autogenerate sees the complete metadata.
 """
 from app.models.base import BaseModel, ensure_aware, utcnow
+from app.models.api_token import ApiToken
 from app.models.article import Article
 from app.models.brand import Brand
 from app.models.category import Category
@@ -21,6 +22,7 @@ from app.models.setting import Setting
 from app.models.team_member import TeamMember
 from app.models.testimonial import Testimonial
 from app.models.user import Permission, Role, TokenBlocklist, User
+from app.models.webhook import Webhook
 
 __all__ = [
     "BaseModel", "utcnow", "ensure_aware",
@@ -29,4 +31,5 @@ __all__ = [
     "Article", "Brand", "Category", "Document", "Event",
     "TeamMember", "Testimonial",
     "ContentType", "FieldDefinition", "ContentEntry",
+    "ApiToken", "Webhook",
 ]

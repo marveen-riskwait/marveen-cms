@@ -17,7 +17,7 @@ CONTENT_MODULES = [
     "testimonials", "seo", "content",
 ]
 ADMIN_MODULES = ["users", "roles", "settings", "logs", "trash", "backups",
-                 "content_types"]
+                 "content_types", "api_tokens", "webhooks"]
 RESERVATION_MODULES = ["reservations"]
 ACTIONS = ["view", "create", "update", "delete"]
 PUBLISHABLE = {"pages", "blog", "news", "events"}

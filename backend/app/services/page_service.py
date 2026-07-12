@@ -60,9 +60,14 @@ def update_page(page_id: int, data: dict, *, author_id: int | None = None) -> Pa
     if _content_changes(page, data):
         _snapshot(page, author_id)
 
+    was_published = page.status == "published"
     for key, value in data.items():
         setattr(page, key, value)
     db.session.commit()
+
+    if page.status == "published" and not was_published:
+        from app.services import webhook_service
+        webhook_service.dispatch("page.published", page.to_dict())
     return page
 
 

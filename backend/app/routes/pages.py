@@ -8,7 +8,8 @@ from __future__ import annotations
 from flask import Blueprint, request
 
 from app.models.page import Page
-from app.permissions.decorators import require_permission
+from app.models.page_revision import PageRevision
+from app.permissions.decorators import current_user, require_permission
 from app.schemas.page import page_schema
 from app.services import page_service, preview_service
 from app.services.crud_service import CRUDService
@@ -60,7 +61,8 @@ def create_page():
 @require_permission("pages.update")
 def update_page(page_id):
     data = page_schema.load(request.get_json(silent=True) or {}, partial=True)
-    return ok(page_service.update_page(page_id, data).to_dict())
+    page = page_service.update_page(page_id, data, author_id=current_user().id)
+    return ok(page.to_dict())
 
 
 @pages_bp.delete("/<int:page_id>")
@@ -81,6 +83,30 @@ def restore_page(page_id):
 def purge_page(page_id):
     _service.purge(page_id)
     return ok(message="Supprimée définitivement")
+
+
+@pages_bp.get("/<int:page_id>/revisions")
+@require_permission("pages.view")
+def list_revisions(page_id):
+    return paginate(page_service.list_revisions(page_id),
+                    serialize=lambda r: {k: v for k, v in r.to_dict().items()
+                                         if k not in ("blocks", "seo")})
+
+
+@pages_bp.get("/<int:page_id>/revisions/<int:revision_id>")
+@require_permission("pages.view")
+def get_revision(page_id, revision_id):
+    revision = PageRevision.query.filter_by(id=revision_id, page_id=page_id).first()
+    if revision is None:
+        raise APIException("Révision introuvable", status_code=404)
+    return ok(revision.to_dict())
+
+
+@pages_bp.post("/<int:page_id>/revisions/<int:revision_id>/restore")
+@require_permission("pages.update")
+def restore_revision(page_id, revision_id):
+    page = page_service.restore_revision(page_id, revision_id, author_id=current_user().id)
+    return ok(page.to_dict())
 
 
 @pages_bp.get("/<int:page_id>/preview")

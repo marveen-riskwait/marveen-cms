@@ -13,6 +13,7 @@ from app.models.faq import Faq
 from app.models.media import Media
 from app.models.menu import Menu
 from app.models.page import Page
+from app.models.page_revision import PageRevision
 from app.models.partner import Partner
 from app.models.setting import Setting
 from app.models.team_member import TeamMember
@@ -22,7 +23,7 @@ from app.models.user import Permission, Role, TokenBlocklist, User
 __all__ = [
     "BaseModel", "utcnow", "ensure_aware",
     "User", "Role", "Permission", "TokenBlocklist",
-    "Faq", "Partner", "Page", "Media",
+    "Faq", "Partner", "Page", "PageRevision", "Media",
     "Article", "Brand", "Category", "Document", "Event",
     "TeamMember", "Testimonial",
 ]

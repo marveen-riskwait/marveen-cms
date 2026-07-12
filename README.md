@@ -4,6 +4,8 @@ CMS moderne et générique (Flask + React) pour créer n'importe quel site
 vitrine en quelques minutes. RDV Cycles n'est qu'un **thème + des données**,
 pas le produit.
 
+📖 **[Tutoriel complet de l'application →](docs/TUTORIEL.md)** (tous les écrans, illustré).
+
 ## Stack
 
 - **Backend** : Python 3.13 · Flask (app factory) · SQLAlchemy · Alembic

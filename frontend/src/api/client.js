@@ -36,6 +36,27 @@ export const DashboardAPI = {
   stats: () => api.get("/dashboard/stats").then((r) => r.data.data),
 };
 
+// Media library: browse is a normal list; upload is multipart.
+export const MediaAPI = {
+  list: (params) => api.get("/media", { params }).then((r) => r.data),
+  upload: (file, meta = {}, onProgress) => {
+    const form = new FormData();
+    form.append("file", file);
+    if (meta.alt) form.append("alt", meta.alt);
+    if (meta.title) form.append("title", meta.title);
+    if (meta.tags) form.append("tags", meta.tags);
+    return api
+      .post("/media", form, {
+        headers: { "Content-Type": "multipart/form-data" },
+        onUploadProgress: (e) =>
+          onProgress && e.total && onProgress(Math.round((e.loaded / e.total) * 100)),
+      })
+      .then((r) => r.data.data);
+  },
+  update: (id, body) => api.patch(`/media/${id}`, body).then((r) => r.data.data),
+  remove: (id) => api.delete(`/media/${id}`).then((r) => r.data),
+};
+
 // Generic CRUD client for any module (used by the next milestone's tables).
 export const resource = (name) => ({
   list: (params) => api.get(`/${name}`, { params }).then((r) => r.data),

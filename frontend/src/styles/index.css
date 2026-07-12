@@ -71,3 +71,19 @@ a { text-decoration: none; }
   .mv-sidebar.open { transform: none; }
   .mv-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,.4); z-index: 1040; }
 }
+
+/* Media library */
+.mv-dropzone {
+  border: 2px dashed var(--bs-border-color); border-radius: 14px;
+  padding: 1.6rem 1rem; text-align: center; cursor: pointer;
+  color: var(--bs-secondary-color); background: var(--bs-tertiary-bg);
+  transition: border-color .15s ease, background .15s ease;
+}
+.mv-dropzone:hover { border-color: var(--mv-brand); }
+.mv-dropzone.is-dragging { border-color: var(--mv-brand); background: rgba(140, 198, 63, .08); }
+.mv-media-thumb {
+  aspect-ratio: 1 / 1; display: flex; align-items: center; justify-content: center;
+  background: var(--bs-tertiary-bg); border-radius: 12px 12px 0 0; overflow: hidden;
+}
+.mv-media-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.mv-media-thumb i { font-size: 2.2rem; color: var(--bs-secondary-color); }

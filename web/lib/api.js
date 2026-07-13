@@ -22,6 +22,17 @@ export const getPreview = (token) => get(`/preview?token=${encodeURIComponent(to
 export const getSettings = () => get(`/settings`);
 export const getMenu = (location) => get(`/menus/${location}`);
 
+// Blog / Actualités (published). List returns { items, meta }.
+async function getList(path) {
+  try {
+    const res = await fetch(`${BASE}/api/public${path}`, { cache: "no-store" });
+    if (!res.ok) return { items: [] };
+    return await res.json();
+  } catch { return { items: [] }; }
+}
+export const getBlogList = () => getList(`/blog`);
+export const getBlogPost = (slug) => get(`/blog/${encodeURIComponent(slug)}`);
+
 // Media URL for use in the browser. Relative `/media/...` paths are kept
 // same-origin (served by a Next rewrite → backend, see next.config.js), so the
 // browser never needs to reach the API host directly — which matters behind a

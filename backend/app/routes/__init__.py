@@ -19,6 +19,7 @@ def register_blueprints(app: Flask) -> None:
     from app.routes.media import media_bp, media_files_bp
     from app.routes.menus import public_menus_bp
     from app.routes.pages import pages_bp, public_pages_bp
+    from app.routes.public_blog import public_blog_bp
     from app.routes.reservations import (
         public_reservations_bp, reservations_bp, stripe_bp)
     from app.routes.settings import public_settings_bp, settings_bp
@@ -46,6 +47,7 @@ def register_blueprints(app: Flask) -> None:
     app.register_blueprint(settings_bp, url_prefix="/api/settings")
     app.register_blueprint(public_settings_bp, url_prefix="/api/public")
     app.register_blueprint(public_menus_bp, url_prefix="/api/public")
+    app.register_blueprint(public_blog_bp, url_prefix="/api/public")
     app.register_blueprint(dashboard_bp, url_prefix="/api/dashboard")
     app.register_blueprint(users_bp, url_prefix="/api/users")
     app.register_blueprint(roles_bp, url_prefix="/api/roles")

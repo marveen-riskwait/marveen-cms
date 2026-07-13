@@ -34,6 +34,17 @@ def _settings() -> None:
         "default_meta_description": (
             "Louez un vélo électrique ou musculaire au lac du Salagou, à l'heure, "
             "à la journée ou à la semaine.", "seo"),
+        # Global theme (see config/theme.js) — restyles the whole public site.
+        "theme_color_primary": ("#2f9e63", "theme"),
+        "theme_color_secondary": ("#29abe2", "theme"),
+        "theme_color_accent": ("#f59e0b", "theme"),
+        "theme_color_bg": ("#ffffff", "theme"),
+        "theme_color_text": ("#16181d", "theme"),
+        "theme_font_heading": ("Poppins", "theme"),
+        "theme_font_body": ("Inter", "theme"),
+        "theme_radius": ("14", "theme"),
+        "theme_button_style": ("pill", "theme"),
+        "theme_container": ("1120", "theme"),
     }
     for key, (value, group) in values.items():
         settings_service.upsert(key, value, group=group, is_public=True)

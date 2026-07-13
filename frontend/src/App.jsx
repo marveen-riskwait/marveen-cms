@@ -14,6 +14,7 @@ import { PagesList } from "./pages/PagesList";
 import { Placeholder } from "./pages/Placeholder";
 import { ResourcePage } from "./pages/ResourcePage";
 import { Settings } from "./pages/Settings";
+import { Theme } from "./pages/Theme";
 import { Trash } from "./pages/Trash";
 import { Users } from "./pages/Users";
 
@@ -32,6 +33,7 @@ export default function App() {
         <Route path="content/:slug" element={<ContentEntries />} />
         <Route path="users" element={<Users />} />
         <Route path="settings" element={<Settings />} />
+        <Route path="theme" element={<Theme />} />
         <Route path="menus" element={<Menus />} />
         <Route path="integrations" element={<Integrations />} />
         <Route path="trash" element={<Trash />} />

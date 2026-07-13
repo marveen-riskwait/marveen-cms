@@ -2,6 +2,7 @@ import "./globals.css";
 
 import { Footer, Header } from "../components/Nav";
 import { getMenu, getSettings } from "../lib/api";
+import { googleFontsHref, themeCss } from "../lib/theme";
 
 export async function generateMetadata() {
   const settings = await getSettings();
@@ -16,12 +17,16 @@ export default async function RootLayout({ children }) {
   const [settings, header, footer] = await Promise.all([
     getSettings(), getMenu("header"), getMenu("footer"),
   ]);
-  const brand = settings?.primary_color;
-  const style = brand ? { "--brand": brand } : undefined;
+  const fontsHref = googleFontsHref(settings);
 
   return (
     <html lang="fr">
-      <body style={style}>
+      <head>
+        {fontsHref && <link rel="stylesheet" href={fontsHref} />}
+        {/* Theme tokens from the CMS override the defaults in globals.css. */}
+        <style dangerouslySetInnerHTML={{ __html: themeCss(settings) }} />
+      </head>
+      <body>
         <Header settings={settings} menu={header} />
         <main>{children}</main>
         <Footer settings={settings} menu={footer} />

@@ -27,6 +27,7 @@ export const MODULE_GROUPS = [
     title: "Configuration",
     items: [
       { label: "Menus", path: "/admin/menus", icon: "bi-list-nested", perm: "menus.view", resource: "menus" },
+      { label: "Apparence", path: "/admin/theme", icon: "bi-palette", perm: "settings.view", resource: "theme" },
       { label: "Paramètres", path: "/admin/settings", icon: "bi-gear", perm: "settings.view", resource: "settings" },
       { label: "Utilisateurs", path: "/admin/users", icon: "bi-shield-lock", perm: "users.view", resource: "users" },
       { label: "Intégrations", path: "/admin/integrations", icon: "bi-plugin", perm: "api_tokens.view", resource: "integrations" },

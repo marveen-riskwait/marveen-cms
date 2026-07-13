@@ -68,6 +68,8 @@ main { min-height: 60vh; }
 .blk-cta { text-align: center; }
 .blk-embed { position: relative; padding-top: 56.25%; border-radius: var(--radius); overflow: hidden; }
 .blk-embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; }
+.blk-map { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); }
+.blk-map iframe { width: 100%; height: 380px; border: 0; display: block; }
 .blk-video { width: 100%; border-radius: var(--radius); }
 
 /* Footer */

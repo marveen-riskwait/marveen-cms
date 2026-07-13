@@ -103,9 +103,24 @@ function Html({ data }) {
   );
 }
 
+function MapBlock({ data }) {
+  if (!data.address) return null;
+  // Google Maps embed (no API key): a pin is placed at the address.
+  const src = `https://maps.google.com/maps?q=${encodeURIComponent(data.address)}&z=15&output=embed`;
+  return (
+    <section className="blk container">
+      {data.title && <h2 style={{ textAlign: "center" }}>{data.title}</h2>}
+      <div className="blk-map">
+        <iframe src={src} title={data.title || data.address} loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade" allowFullScreen />
+      </div>
+    </section>
+  );
+}
+
 const REGISTRY = {
   hero: Hero, text: Text, image: ImageBlock, gallery: Gallery,
-  quote: Quote, cta: Cta, video: Video, html: Html,
+  quote: Quote, cta: Cta, video: Video, map: MapBlock, html: Html,
 };
 
 export function Blocks({ blocks }) {

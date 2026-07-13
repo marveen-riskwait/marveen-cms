@@ -62,10 +62,17 @@ export const BLOCK_TYPES = {
     label: "HTML libre", icon: "bi-code-slash",
     fields: [{ name: "html", label: "Code HTML", type: "textarea", rows: 6 }],
   },
+  map: {
+    label: "Carte", icon: "bi-geo-alt",
+    fields: [
+      { name: "address", label: "Adresse (le pin s'y place)", type: "text" },
+      { name: "title", label: "Titre (optionnel)", type: "text" },
+    ],
+  },
 };
 
 // Palette order in the "add block" menu.
-export const BLOCK_ORDER = ["hero", "text", "image", "gallery", "quote", "cta", "video", "html"];
+export const BLOCK_ORDER = ["hero", "text", "image", "gallery", "quote", "cta", "video", "map", "html"];
 
 // Build an empty block of the given type from its field defaults.
 export function makeBlock(type) {
